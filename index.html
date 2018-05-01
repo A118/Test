@@ -1,2 +1,199 @@
-<h6>uuu</h6>
-<h1>uuuu</h1>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#div_1,#div_2{
+			width: 600px;
+			border: 1px deepskyblue solid;
+		}
+		h2{
+			background-color: brown;
+			color: white;
+			text-align: center;
+		}
+		#div_2{
+			display: none;
+		}
+		
+	</style>
+	<script type="text/javascript" src="js/jquery-1.8.3.js" ></script>
+	<script>
+		$(function(){
+			//点击新增时
+			$("#add").click(function(){
+				$("#div_2").show();//让新增显示
+				$("#div_2 h2").text("新增人员信息");
+			});
+			
+			var index=0;//选中tr的下标
+			
+			//点击修改时
+			$(".update").live("click",function(){
+				$("#div_2").show();//让修改显示
+				$("#div_2 h2").text("人员详细信息");
+				
+				//获取下标
+				index = $(this).parent().parent().index();
+				
+				//将选中的值，放入文本框中
+				$("input[name=userName]").val($(this).parent().parent().children().eq(0).text());
+				$("input[name=age]").val($(this).parent().parent().children().eq(1).text());
+				$("input[name=job]").val($(this).parent().parent().children().eq(2).text());
+				$("input[name=phone]").val($(this).parent().parent().children().eq(3).text());
+				$("input[name=email]").val($(this).parent().parent().children().eq(4).text());
+			})
+			
+			//点击确定时
+			$("input[name=ok]").click(function(){
+				var name =  $("#div_2 h2").text();//获得新增/修改的标题
+				
+				//获取文本框，用户输入的值
+				var userName = $("input[name=userName]").val();//姓名
+				var age = $("input[name=age]").val();//年龄
+				var job = $("input[name=job]").val();//职业
+				var phone = $("input[name=phone]").val();//电话
+				var email = $("input[name=email]").val();//邮箱
+				
+				//验证
+				
+				if(name=="新增人员信息"){
+					//创建一行
+					var str = "<tr>"
+					+"<td>"+userName+"</td>"
+					+ "<td>"+age+"</td>"
+					+"<td>"+job+"</td>"
+					+"<td>"+phone+"</td>"
+					+"<td>"+email+"</td>"
+					+"<td>"
+					+"<span class='update'>修改</span>"
+					+"<span class='del'>删除</span>"
+					+"</td>"
+					+"</tr>";
+					//将创建的行插入到table里面
+					$("#div_1 table").append(str);
+				}else{
+					$("#div_1 table tr").eq(index).children().eq(0).text(userName);
+					$("#div_1 table tr").eq(index).children().eq(1).text(age);
+					$("#div_1 table tr").eq(index).children().eq(2).text(job);
+					$("#div_1 table tr").eq(index).children().eq(3).text(phone);
+					$("#div_1 table tr").eq(index).children().eq(4).text(email);
+				}
+				//将内容清空
+				$("#div_2 table input[type=text]").val("");
+				//隐藏div
+				$("#div_2").hide();
+			})
+			
+			//点击删除时
+			$(".del").live("click",function(){
+				$(this).parent().parent().remove();
+			})
+		})
+	</script>
+	<body>
+		<!--人员信息列表-->
+		<input type="button" id="add"  value="新增"/>
+		<div id="div_1">
+			<h2>人员信息表</h2>
+			<table width="600px" border="1px">
+				<tr>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>职业</th>
+					<th>手机号</th>
+					<th>邮箱</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td>赵忠祥</td>
+					<td>18</td>
+					<td>工程师</td>
+					<td>18676543454</td>
+					<td>766477@qq.com</td>
+					<td>
+						<span class="update">修改</span>
+						<span class="del">删除</span>
+					</td>
+				</tr>
+				<tr>
+					<td>李白</td>
+					<td>89</td>
+					<td>测试工程师</td>
+					<td>18676543454</td>
+					<td>766477@qq.com</td>
+					<td>
+						<span class="update">修改</span>
+						<span class="del">删除</span>
+					</td>
+				</tr>
+				<tr>
+					<td>杜甫</td>
+					<td>34</td>
+					<td>数据库工程师</td>
+					<td>18676543454</td>
+					<td>766477@qq.com</td>
+					<td>
+						<span class="update">修改</span>
+						<span class="del">删除</span>
+					</td>
+				</tr>
+				<tr>
+					<td>李清照</td>
+					<td>56</td>
+					<td>项目经理</td>
+					<td>18676543454</td>
+					<td>766477@qq.com</td>
+					<td>
+						<span class="update">修改</span>
+						<span class="del">删除</span>
+					</td>
+				</tr>
+				<tr>
+					<td>赵忠祥</td>
+					<td>18</td>
+					<td>工程师</td>
+					<td>18676543454</td>
+					<td>766477@qq.com</td>
+					<td>
+						<span class="update">修改</span>
+						<span class="del">删除</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	
+		<!--新增、修改员工信息-->
+		<div id="div_2">
+			<h2>新增人员信息</h2>
+			<table width="600px">
+				<tr>
+					<td>姓名：<input type="text" name="userName" value=""/></td>
+					<td>年龄：<input type="text" name="age" value=""/></td>
+				</tr>
+				<tr>
+					<td>职业：<input type="text" name="job" value=""/></td>
+					<td>手机号：<input type="text" name="phone" value=""/></td>
+				</tr>
+				<tr>
+					<td>邮箱：<input type="text" name="email" value=""/></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="right">
+						<input type="button" name="ok" value="确定" />
+						<input type="button" name="no" value="取消" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
